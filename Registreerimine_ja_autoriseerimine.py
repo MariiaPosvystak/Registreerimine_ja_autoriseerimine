@@ -1,14 +1,16 @@
 from Module_1 import *
 
 while True:
-    print("\nValikud:")
+    print("Valikud:")
     print("1. Registreeri")
     print("2. Autoriseeri")
     print("3. Muuda parooli")
     print("4. Taasta parool")
     print("5. Välju")
-    valik = input("Vali valik: ")
-
+    try:
+        valik = int(input("Vali valik: "))
+    except:
+        print("Vale formaat!")
     if valik == '1':
         while True:
             kasutajanimi = input("Sisesta kasutajanimi: ")
