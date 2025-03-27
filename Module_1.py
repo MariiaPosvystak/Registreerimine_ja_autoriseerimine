@@ -2,8 +2,8 @@
 import string
 
 # Järjendid kasutajate nimede ja paroolide hoidmiseks
-usernames = []
-passwords = []
+usernames = [12]
+passwords = [13]
 
 # Генерує випадковий пароль, який складається з 12 символів, включаючи цифри, великі та малі літери, а також спеціальні символи.
 def generate_password_auto() -> str:
@@ -39,7 +39,7 @@ def generate_password_manual(k: int) -> str:
     return sala
 
 # Перевіряє, чи відповідає пароль вимогам (містить цифри, великі та малі літери, спеціальні символи).
-def is_valid_password(password: str) -> bool:
+def is_valid_password(parool: str) -> bool:
     """ Kontrollib, kas parool vastab nõuetele.
     Paroolis peab olema vähemalt üks number, suur täht, väike täht ja erimärk.
     :param password: Parool
@@ -47,14 +47,14 @@ def is_valid_password(password: str) -> bool:
     :return: Kas parool vastab nõuetele
     :rtype: bool
     """
-    has_digit = any(char.isdigit() for char in password)
-    has_upper = any(char.isupper() for char in password)
-    has_lower = any(char.islower() for char in password)
-    has_special = any(char in ".,:;!_*-+()/#¤%&" for char in password)
+    has_digit = any(char.isdigit() for char in parool)
+    has_upper = any(char.isupper() for char in parool)
+    has_lower = any(char.islower() for char in parool)
+    has_special = any(char in ".,:;!_*-+()/#¤%&" for char in parool)
     return has_digit and has_upper and has_lower and has_special
 
 # Реєструє користувача, якщо ім'я користувача ще не існує і пароль відповідає вимогам.
-def register_user(username: str, password: str) -> any:
+def register_user(kasutajanimi: str, parool:str) -> any:
     """ Registreerib kasutaja.
     :param username: Kasutajanimi
     :type username: str
@@ -63,16 +63,11 @@ def register_user(username: str, password: str) -> any:
     :return: Kasutaja registreerimine õnnestus, vastav teade
     :rtype: any
     """
-    if username in usernames:
-        return False, "Username already exists."
-    if not is_valid_password(password):
-        return False, "Password does not meet the criteria."
-    usernames.append(username)
-    passwords.append(password)
-    return True, "Registration successful."
+    usernames.append(kasutajanimi)
+    passwords.append(parool)
 
 # Авторизує користувача, якщо ім'я користувача та пароль правильні.
-def authorize_user(username: str, password: str) -> any:
+def authorize_user(kasutajanimi: str, parool: str) -> any:
     """ Autoriseerib kasutaja.
     :param username: Kasutajanimi
     :type username: str
@@ -81,44 +76,9 @@ def authorize_user(username: str, password: str) -> any:
     :return: Kasutaja autoriseerimine õnnestus, vastav teade
     :rtype: any
     """
-    if username in usernames:
-        index = usernames.index(username)
-        if passwords[index] == password:
-            return True, "Authorization successful."
-    return False, "Invalid username or password."
-
-# Змінює пароль користувача, якщо старий пароль правильний і новий пароль відповідає вимогам.
-def change_password(username: str, old_password: str, new_password: str) -> any:
-    """ Muudab kasutaja parooli.
-    :param username: Kasutajanimi
-    :type username: str
-    :param old_password: Vana parool
-    :type old_password: str
-    :param new_password: Uus parool
-    :type new_password: str
-    :return: Parooli muutmine õnnestus, vastav teade
-    :rtype: any
-    """
-    if authorize_user(username, old_password)[0]:
-        if is_valid_password(new_password):
-            index = usernames.index(username)
-            passwords[index] = new_password
-            return True, "Password changed successfully."
-        else:
-            return False, "New password does not meet the criteria."
-    return False, "Authorization failed."
-
-# Відновлює пароль користувача, генеруючи новий випадковий пароль.
-def reset_password(username: str) -> any:
-    """ Taastab kasutaja parooli.
-    :param username: Kasutajanimi
-    :type username: str
-    :return: Parooli taastamine õnnestus, vastav teade
-    :rtype: any
-    """
-    if username in usernames:
-        new_password = generate_password_auto()
-        index = usernames.index(username)
-        passwords[index] = new_password
-        return True, f"New password is: {new_password}"
-    return False, "Username not found."
+    if kasutajanimi in usernames:
+        i = usernames.index(kasutajanimi)
+        v3=usernames[i] == parool
+    else:
+        v3=False
+    return v3
