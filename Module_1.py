@@ -54,7 +54,7 @@ def is_valid_password(password: str) -> bool:
     return has_digit and has_upper and has_lower and has_special
 
 # Реєструє користувача, якщо ім'я користувача ще не існує і пароль відповідає вимогам.
-def register_user(username: str, password: str) -> tuple:
+def register_user(username: str, password: str) -> any:
     """ Registreerib kasutaja.
     :param username: Kasutajanimi
     :type username: str
@@ -72,7 +72,7 @@ def register_user(username: str, password: str) -> tuple:
     return True, "Registration successful."
 
 # Авторизує користувача, якщо ім'я користувача та пароль правильні.
-def authorize_user(username: str, password: str) -> tuple:
+def authorize_user(username: str, password: str) -> any:
     """ Autoriseerib kasutaja.
     :param username: Kasutajanimi
     :type username: str
@@ -88,7 +88,7 @@ def authorize_user(username: str, password: str) -> tuple:
     return False, "Invalid username or password."
 
 # Змінює пароль користувача, якщо старий пароль правильний і новий пароль відповідає вимогам.
-def change_password(username: str, old_password: str, new_password: str) -> tuple:
+def change_password(username: str, old_password: str, new_password: str) -> any:
     """ Muudab kasutaja parooli.
     :param username: Kasutajanimi
     :type username: str
@@ -109,7 +109,7 @@ def change_password(username: str, old_password: str, new_password: str) -> tupl
     return False, "Authorization failed."
 
 # Відновлює пароль користувача, генеруючи новий випадковий пароль.
-def reset_password(username: str) -> tuple:
+def reset_password(username: str) -> any:
     """ Taastab kasutaja parooli.
     :param username: Kasutajanimi
     :type username: str
