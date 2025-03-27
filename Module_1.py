@@ -61,7 +61,7 @@ def register_user(username: str, password: str) -> any:
     :param password: Parool
     :type password: str
     :return: Kasutaja registreerimine õnnestus, vastav teade
-    :rtype: tuple
+    :rtype: any
     """
     if username in usernames:
         return False, "Username already exists."
@@ -79,7 +79,7 @@ def authorize_user(username: str, password: str) -> any:
     :param password: Parool
     :type password: str
     :return: Kasutaja autoriseerimine õnnestus, vastav teade
-    :rtype: tuple
+    :rtype: any
     """
     if username in usernames:
         index = usernames.index(username)
@@ -97,7 +97,7 @@ def change_password(username: str, old_password: str, new_password: str) -> any:
     :param new_password: Uus parool
     :type new_password: str
     :return: Parooli muutmine õnnestus, vastav teade
-    :rtype: tuple
+    :rtype: any
     """
     if authorize_user(username, old_password)[0]:
         if is_valid_password(new_password):
@@ -114,7 +114,7 @@ def reset_password(username: str) -> any:
     :param username: Kasutajanimi
     :type username: str
     :return: Parooli taastamine õnnestus, vastav teade
-    :rtype: tuple
+    :rtype: any
     """
     if username in usernames:
         new_password = generate_password_auto()
