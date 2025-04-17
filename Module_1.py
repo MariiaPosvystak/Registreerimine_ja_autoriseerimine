@@ -2,8 +2,28 @@
 import string
 
 # Järjendid kasutajate nimede ja paroolide hoidmiseks
-usernames = [12]
-passwords = [13]
+usernames = {}
+passwords ={}
+
+
+def salvesta_faili():
+    try:
+        with open ('Nimi.txt', 'w') as f:
+            for username in usernames:
+                    f.write(f"{username}:{passwords[username]}\n")
+    except IOError as e:
+            print(f"Error saving to file: {e}")
+
+def lae_failist():
+    try:
+        with open('Nimi.txt', 'r') as f:
+            for line in f:
+                if line.strip():
+                    username, password = line.strip().split(': ')
+                    usernames[username] = username
+                    passwords[username] = password
+    except IOError as e:
+        print(f"Error reading file: {e}")
 
 # Генерує випадковий пароль, який складається з 12 символів, включаючи цифри, великі та малі літери, а також спеціальні символи.
 def generate_password_auto() -> str:
@@ -63,8 +83,23 @@ def register_user(kasutajanimi: str, parool:str) -> any:
     :return: Kasutaja registreerimine õnnestus, vastav teade
     :rtype: any
     """
-    usernames.append(kasutajanimi)
-    passwords.append(parool)
+    kasutajanimi = kasutajanimi.lower()
+    if kasutajanimi in usernames:
+        print("Kasutajanimi on juba olemas!")
+        return False
+    if not is_valid_password(parool):
+        print("Parool ei vasta nõuetele!")
+        return False
+    usernames[kasutajanimi] = kasutajanimi
+    passwords[kasutajanimi] = parool
+    try:
+        with open('Nimi.txt', 'a') as f:
+            f.write(f"{kasutajanimi}:{parool}\n")
+    except IOError as e:
+        print(f"Error appending to file: {e}")
+        return False
+    print("Kasutaja registreeritud!")
+    return True
 
 # Авторизує користувача, якщо ім'я користувача та пароль правильні.
 def authorize_user(kasutajanimi: str, parool: str) -> any:
@@ -76,9 +111,6 @@ def authorize_user(kasutajanimi: str, parool: str) -> any:
     :return: Kasutaja autoriseerimine õnnestus, vastav teade
     :rtype: any
     """
-    if kasutajanimi in usernames:
-        i = usernames.index(kasutajanimi)
-        v3=usernames[i] == parool
-    else:
-        v3=False
-    return v3
+    if kasutajanimi in usernames and passwords[kasutajanimi] == parool:
+        return True
+    return False
