@@ -19,7 +19,7 @@ def lae_failist():
         with open('Nimi.txt', 'r') as f:
             for line in f:
                 if line.strip():
-                    username, password = line.strip().split(': ')
+                    username, password = line.strip().split(':')
                     usernames[username] = username
                     passwords[username] = password
     except IOError as e:
@@ -111,6 +111,7 @@ def authorize_user(kasutajanimi: str, parool: str) -> any:
     :return: Kasutaja autoriseerimine õnnestus, vastav teade
     :rtype: any
     """
+    kasutajanimi = kasutajanimi.lower()
     if kasutajanimi in usernames and passwords[kasutajanimi] == parool:
         return True
     return False

@@ -1,6 +1,6 @@
 from ast import Break
 from Module_1 import *
-
+lae_failist()
 while True:
     print("Valikud:")
     print("1. Registreeri")
